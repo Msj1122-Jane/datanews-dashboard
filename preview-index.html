@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>视觉风格总览 · 4 选 1</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #1a1a1a;
+  color: #e6e8eb;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 28px;
+  background: #0d0d0d;
+  border-bottom: 1px solid #333;
+  flex-shrink: 0;
+}
+.bar-title {
+  font-family: "Noto Serif SC", serif;
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  color: #fff;
+}
+.bar-sub {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: #888;
+  margin-right: auto;
+  letter-spacing: 1px;
+}
+
+.tab-row {
+  display: flex;
+  gap: 6px;
+}
+.tab {
+  font-family: "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  background: transparent;
+  color: #aaa;
+  border: 1px solid #333;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.5px;
+}
+.tab:hover { border-color: #888; color: #fff; }
+.tab.active {
+  background: #d4af37;
+  color: #0d0d0d;
+  border-color: #d4af37;
+  font-weight: 700;
+}
+
+.swatch {
+  display: flex;
+  gap: 3px;
+  margin-left: 8px;
+}
+.swatch span {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.viewer {
+  flex: 1;
+  position: relative;
+  background: #1a1a1a;
+}
+.viewer iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: none;
+  background: #fff;
+}
+.viewer iframe.show { display: block; }
+
+.info-strip {
+  display: flex;
+  gap: 16px;
+  padding: 10px 28px;
+  background: #0d0d0d;
+  border-top: 1px solid #333;
+  font-size: 12px;
+  color: #aaa;
+  flex-shrink: 0;
+  align-items: center;
+}
+.info-strip .label {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: #666;
+  letter-spacing: 1px;
+}
+.info-strip .desc {
+  flex: 1;
+}
+.info-strip .pick {
+  font-size: 12px;
+  background: #1a1a1a;
+  border: 1px solid #444;
+  color: #d4af37;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.info-strip .pick:hover {
+  background: #d4af37;
+  color: #0d0d0d;
+}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="bar-title">⚫ 视觉风格总览</div>
+  <div class="bar-sub">DN-DASHBOARD · 4 选 1</div>
+  <div class="tab-row">
+    <button class="tab active" data-style="1">
+      01 · 文青亮色
+      <span class="swatch"><span style="background:#faf7f2"></span><span style="background:#a87b3f"></span><span style="background:#b03a2e"></span></span>
+    </button>
+    <button class="tab" data-style="2">
+      02 · 纽时 Upshot
+      <span class="swatch"><span style="background:#fff;border-color:#000"></span><span style="background:#121212"></span><span style="background:#c41e3a"></span></span>
+    </button>
+    <button class="tab" data-style="3">
+      03 · 柔和编辑
+      <span class="swatch"><span style="background:#f5f0e6"></span><span style="background:#355e3b"></span><span style="background:#b2492a"></span></span>
+    </button>
+    <button class="tab" data-style="4">
+      04 · 文青深色
+      <span class="swatch"><span style="background:#0a0e1a"></span><span style="background:#d4af37"></span><span style="background:#5b8fb9"></span></span>
+    </button>
+  </div>
+</div>
+
+<div class="viewer">
+  <iframe class="show" data-style="1" src="preview-1-warmlight.html"></iframe>
+  <iframe data-style="2" src="preview-2-nyt.html"></iframe>
+  <iframe data-style="3" src="preview-3-soft.html"></iframe>
+  <iframe data-style="4" src="preview-4-darkserious.html"></iframe>
+</div>
+
+<div class="info-strip">
+  <span class="label">CURRENT</span>
+  <span class="desc" id="currentDesc">01 · 文青亮色版 · 米纸暖色 + 古铜金 + 报刊感衬线大标题。整体气质沉稳偏文气,适合做严肃议题作品的"作品后台"。</span>
+  <button class="pick" id="pickBtn">✓ 我选这个</button>
+</div>
+
+<script>
+const descs = {
+  '1': '01 · 文青亮色版 · 米纸暖色 #faf7f2 + 古铜金 #a87b3f + 报刊感衬线大标题。整体气质沉稳偏文气,适合做严肃议题作品的"作品后台"。',
+  '2': '02 · 纽时 Upshot 风 · 纯白 + 重磅黑字 + 红点缀。粗黑横线分割,数字超大,严肃台体。最经典的数据新闻 good taste。',
+  '3': '03 · 柔和编辑风 · 米黄背景 #f5f0e6 + 莫兰迪绿 #355e3b + 塔红 #b2492a。圆角卡片 + 圆点装饰 + 衬线斜体,接近《三联生活周刊》《二文》气质。',
+  '4': '04 · 文青深色版 · 深蓝黑底 #0a0e1a + 香槟金 #d4af37。冷静、技术、夜晚工作感强,适合"码代码做作品"的氛围。'
+};
+
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => {
+    const id = t.dataset.style;
+    document.querySelectorAll('.tab').forEach(x => x.classList.toggle('active', x === t));
+    document.querySelectorAll('iframe').forEach(f => f.classList.toggle('show', f.dataset.style === id));
+    document.getElementById('currentDesc').textContent = descs[id];
+    document.getElementById('pickBtn').dataset.style = id;
+  });
+});
+
+document.getElementById('pickBtn').addEventListener('click', e => {
+  const id = e.target.dataset.style || '1';
+  const labels = {'1':'文青亮色','2':'纽时 Upshot','3':'柔和编辑','4':'文青深色'};
+  alert('已选风格 ' + id + ' · ' + labels[id] + '\n\n回到聊天告诉我"用风格 ' + id + '"我就开始把这套样式搬进 main 站。');
+});
+
+// 默认 desc
+document.getElementById('pickBtn').dataset.style = '1';
+</script>
+
+</body>
+</html>

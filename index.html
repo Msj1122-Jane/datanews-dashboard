@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第十一届数据新闻大赛 · 战队指挥部</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans">
+
+<header class="bg-gradient-to-r from-slate-900 to-blue-900 text-white sticky top-0 z-40 shadow-lg">
+  <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="text-2xl">📊</div>
+      <div>
+        <div class="font-bold text-lg leading-tight">数据新闻大赛 · 战队指挥部</div>
+        <div class="text-xs text-blue-200">第十一届中国数据新闻大赛 · 2026</div>
+      </div>
+    </div>
+    <nav class="hidden md:flex gap-1 text-sm">
+      <a href="#home" class="nav-link px-3 py-2 rounded hover:bg-white/10">首页</a>
+      <a href="#requirements" class="nav-link px-3 py-2 rounded hover:bg-white/10">比赛要求</a>
+      <a href="#works" class="nav-link px-3 py-2 rounded hover:bg-white/10">往期作品</a>
+      <a href="#progress" class="nav-link px-3 py-2 rounded hover:bg-white/10">任务进度</a>
+      <a href="#team" class="nav-link px-3 py-2 rounded hover:bg-white/10">团队</a>
+      <a href="#ai" class="nav-link px-3 py-2 rounded hover:bg-white/10">AI 工作台</a>
+      <a href="#resources" class="nav-link px-3 py-2 rounded hover:bg-white/10">资源</a>
+    </nav>
+    <button id="exportBtn" class="text-xs bg-white/10 hover:bg-white/20 px-3 py-2 rounded">☁ 云同步</button>
+  </div>
+  <nav class="md:hidden flex gap-1 text-xs px-3 pb-2 overflow-x-auto">
+    <a href="#home" class="nav-link px-2 py-1 rounded bg-white/10 whitespace-nowrap">首页</a>
+    <a href="#requirements" class="nav-link px-2 py-1 rounded bg-white/10 whitespace-nowrap">要求</a>
+    <a href="#works" class="nav-link px-2 py-1 rounded bg-white/10 whitespace-nowrap">作品</a>
+    <a href="#progress" class="nav-link px-2 py-1 rounded bg-white/10 whitespace-nowrap">进度</a>
+    <a href="#team" class="nav-link px-2 py-1 rounded bg-white/10 whitespace-nowrap">团队</a>
+    <a href="#ai" class="nav-link px-2 py-1 rounded bg-white/10 whitespace-nowrap">AI</a>
+    <a href="#resources" class="nav-link px-2 py-1 rounded bg-white/10 whitespace-nowrap">资源</a>
+  </nav>
+</header>
+
+<main class="max-w-7xl mx-auto px-6 py-8">
+  <section id="home" class="page"></section>
+  <section id="requirements" class="page hidden"></section>
+  <section id="works" class="page hidden"></section>
+  <section id="progress" class="page hidden"></section>
+  <section id="team" class="page hidden"></section>
+  <section id="ai" class="page hidden"></section>
+  <section id="resources" class="page hidden"></section>
+</main>
+
+<footer class="text-center text-xs text-slate-400 py-8">
+  战队指挥部 · 数据保存在本地浏览器 · 团队同步通过"导出/导入"按钮
+</footer>
+
+<script src="data.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

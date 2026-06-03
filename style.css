@@ -1,0 +1,145 @@
+/* === 战队指挥部 自定义样式(初始版) === */
+.page { animation: fadeIn .3s ease; }
+@keyframes fadeIn { from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;} }
+
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+  border: 1px solid #e2e8f0;
+}
+.card-hover { transition: all .2s; }
+.card-hover:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all .15s;
+  cursor: pointer;
+  border: none;
+}
+.btn-primary { background: #1e40af; color: white; }
+.btn-primary:hover { background: #1e3a8a; }
+.btn-secondary { background: #e2e8f0; color: #334155; }
+.btn-secondary:hover { background: #cbd5e1; }
+.btn-danger { background: #fee2e2; color: #991b1b; }
+.btn-danger:hover { background: #fecaca; }
+
+input.field, textarea.field, select.field {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color .15s;
+  background: white;
+}
+input.field:focus, textarea.field:focus, select.field:focus {
+  border-color: #1e40af;
+  box-shadow: 0 0 0 3px rgba(30,64,175,.1);
+}
+
+.checkbox-task {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  transition: background .15s;
+  cursor: pointer;
+}
+.checkbox-task:hover { background: #f1f5f9; }
+.checkbox-task.done { opacity: .55; }
+.checkbox-task.done .task-title { text-decoration: line-through; }
+
+.timeline-item {
+  position: relative;
+  padding-left: 28px;
+  padding-bottom: 20px;
+  border-left: 2px solid #cbd5e1;
+}
+.timeline-item:last-child { border-left-color: transparent; }
+.timeline-dot {
+  position: absolute;
+  left: -7px;
+  top: 0;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #1e40af;
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px #1e40af;
+}
+.timeline-item.passed .timeline-dot { background: #94a3b8; box-shadow: 0 0 0 2px #94a3b8; }
+.timeline-item.current .timeline-dot { background: #ef4444; box-shadow: 0 0 0 2px #ef4444; animation: pulse 1.5s infinite; }
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 2px #ef4444, 0 0 0 4px rgba(239,68,68,.3); }
+  50% { box-shadow: 0 0 0 2px #ef4444, 0 0 0 8px rgba(239,68,68,0); }
+}
+
+/* 聊天界面 */
+.chat-bubble {
+  padding: 10px 14px;
+  border-radius: 12px;
+  max-width: 85%;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.chat-bubble.user { background: #1e40af; color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+.chat-bubble.ai { background: #f1f5f9; color: #1e293b; align-self: flex-start; border-bottom-left-radius: 4px; }
+.chat-bubble.system { background: #fef3c7; color: #92400e; align-self: center; font-size: 12px; max-width: 90%; }
+
+.nav-link.active { background: rgba(255,255,255,.2); }
+
+/* 滚动条美化 */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* 多行截断兜底(Tailwind 没启用 line-clamp 插件时的备用) */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 任务表格的票数条 */
+.vote-bar {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.vote-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1e40af, #3b82f6);
+  transition: width .3s;
+}
+
+/* 学习要点的"出处"链接 */
+.learn-source-link {
+  color: #1e40af;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(30, 64, 175, 0.3);
+  transition: all 0.15s;
+  padding-bottom: 1px;
+}
+.learn-source-link:hover {
+  border-bottom-color: #1e40af;
+  color: #1e3a8a;
+}

@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>视觉稿 · 文青深度报道风</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+SC:wght@400;500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf7f2;
+  --bg-elev: #ffffff;
+  --bg-elev-2: #f4f0e8;
+  --line: #d8d2c4;
+  --line-soft: #e8e2d4;
+  --text: #1a1a1a;
+  --text-2: #595550;
+  --text-3: #8b857b;
+  --gold: #a87b3f;
+  --gold-soft: #876030;
+  --blue: #2a5d7c;
+  --red: #b03a2e;
+  --green: #5a7d4f;
+  --serif: "Noto Serif SC", "Songti SC", "SimSun", serif;
+  --sans: "Noto Sans SC", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --mono: "JetBrains Mono", "SF Mono", "Cascadia Code", Consolas, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: var(--gold); text-decoration: none; }
+a:hover { color: var(--gold-soft); }
+
+/* ===== 顶部导航 ===== */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(250, 247, 242, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-mark {
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(168, 123, 63, 0.15);
+}
+.brand-name {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+}
+.brand-sub {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 2px;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--text-2);
+  font-size: 14px;
+  padding: 8px 14px;
+  letter-spacing: 0.3px;
+  transition: color 0.2s;
+  border-bottom: 1px solid transparent;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+.export-btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-2);
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  background: transparent;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.2s;
+}
+.export-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ===== 主容器 ===== */
+.main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 48px 32px 96px;
+}
+
+/* ===== Hero 区 ===== */
+.hero {
+  margin-bottom: 80px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--line);
+}
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.hero-meta .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--red);
+  border-radius: 50%;
+  animation: pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.4); }
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: 56px;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 24px;
+}
+.hero-title .accent { color: var(--gold); }
+
+.hero-lead {
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 1.7;
+  color: var(--text-2);
+  max-width: 720px;
+  font-weight: 400;
+}
+
+/* ===== 三大数字 ===== */
+.metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  margin-bottom: 80px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.metric {
+  padding: 36px 32px;
+  position: relative;
+}
+.metric:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 24px;
+  bottom: 24px;
+  width: 1px;
+  background: var(--line);
+}
+.metric-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.metric-value {
+  font-family: var(--serif);
+  font-size: 72px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+.metric-value.warn { color: var(--red); }
+.metric-value.gold { color: var(--gold); }
+.metric-value.green { color: var(--green); }
+.metric-unit {
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-3);
+  margin-left: 8px;
+  letter-spacing: 0;
+}
+.metric-foot {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--text-2);
+  border-top: 1px dashed var(--line);
+  padding-top: 12px;
+}
+
+/* ===== 章节标题 ===== */
+.chapter {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.chapter-num {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: 56px;
+  line-height: 1;
+  color: var(--gold);
+  letter-spacing: -2px;
+}
+.chapter-title {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+.chapter-meta {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 1px;
+}
+
+/* ===== 项目卡 ===== */
+.project-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 80px;
+}
+.panel {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  padding: 28px;
+}
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.panel-title .marker {
+  width: 4px;
+  height: 16px;
+  background: var(--gold);
+}
+
+.kv-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--line-soft);
+  font-size: 14px;
+}
+.kv-row:last-child { border-bottom: none; }
+.kv-key {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 1px;
+  width: 80px;
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+.kv-val {
+  flex: 1;
+  color: var(--text);
+}
+
+.callout {
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: rgba(168, 123, 63, 0.08);
+  border-left: 2px solid var(--gold);
+  font-size: 13px;
+  color: var(--text-2);
+}
+.callout strong { color: var(--gold); font-weight: 500; }
+
+/* 快捷入口 */
+.quick-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line-soft);
+  border: 1px solid var(--line-soft);
+}
+.quick-item {
+  background: var(--bg-elev);
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.quick-item:hover {
+  background: var(--bg-elev-2);
+}
+.quick-item:hover .quick-name { color: var(--gold); }
+.quick-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 1px;
+}
+.quick-name {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.quick-desc {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 4px;
+}
+
+/* ===== 时间轴 ===== */
+.timeline-list {
+  list-style: none;
+  margin-top: 8px;
+}
+.tl-item {
+  display: grid;
+  grid-template-columns: 120px 32px 1fr 100px;
+  align-items: start;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line-soft);
+  position: relative;
+}
+.tl-item:last-child { border-bottom: none; }
+
+.tl-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-3);
+  letter-spacing: 1px;
+  padding-top: 2px;
+}
+.tl-marker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.tl-dot {
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--text-3);
+  background: var(--bg);
+  position: relative;
+  z-index: 2;
+}
+.tl-line {
+  position: absolute;
+  top: 16px;
+  bottom: -20px;
+  left: 50%;
+  width: 1px;
+  background: var(--line);
+  transform: translateX(-50%);
+}
+.tl-item:last-child .tl-line { display: none; }
+.tl-item.passed .tl-dot { background: var(--text-3); border-color: var(--text-3); }
+.tl-item.current .tl-dot {
+  background: var(--red);
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(176, 58, 46, 0.2);
+}
+.tl-item.current .tl-date { color: var(--red); }
+
+.tl-body {
+  padding-left: 8px;
+}
+.tl-title {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.tl-item.passed .tl-title { color: var(--text-2); }
+.tl-desc {
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.tl-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  text-align: right;
+  letter-spacing: 1px;
+  padding-top: 4px;
+}
+.tl-item.current .tl-tag { color: var(--red); }
+
+/* ===== AI 工作台 阶段卡(预览样式) ===== */
+.ai-section {
+  margin-top: 96px;
+  padding-top: 64px;
+  border-top: 1px solid var(--line);
+}
+
+.workflow-step {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  margin-bottom: 24px;
+}
+.step-head {
+  padding: 24px 28px;
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 24px;
+  align-items: center;
+  border-bottom: 1px solid var(--line-soft);
+}
+.step-num {
+  font-family: var(--serif);
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+}
+.step-info-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.step-info-role {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 3px 8px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.step-info-desc {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+.step-progress {
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 1px;
+}
+.step-progress-num {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+  font-family: var(--serif);
+}
+
+.step-body {
+  padding: 24px 28px;
+}
+.step-block {
+  margin-bottom: 24px;
+}
+.step-block:last-child { margin-bottom: 0; }
+.step-block-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.step-block-label::before {
+  content: '';
+  width: 12px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.knowledge-points {
+  list-style: none;
+}
+.knowledge-points li {
+  padding: 14px 0;
+  border-bottom: 1px dashed var(--line-soft);
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.knowledge-points li:last-child { border-bottom: none; }
+.knowledge-points .kp-num {
+  font-family: var(--mono);
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 500;
+  padding-top: 2px;
+}
+.knowledge-points .kp-title {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.knowledge-points .kp-desc {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.7;
+  margin-bottom: 4px;
+}
+.knowledge-points .kp-source {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 1px;
+}
+
+.prompt-box {
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line-soft);
+  padding: 18px 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.8;
+  white-space: pre-wrap;
+  position: relative;
+}
+.prompt-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.tool-chip {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-2);
+  border: 1px solid var(--line);
+  padding: 6px 12px;
+  letter-spacing: 0.5px;
+  transition: all 0.15s;
+  cursor: pointer;
+  background: transparent;
+}
+.tool-chip:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.tool-chip.primary {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* footer */
+.foot {
+  margin-top: 96px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-3);
+  letter-spacing: 1px;
+}
+
+.foot-quote {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--text-2);
+  font-size: 13px;
+  letter-spacing: 0;
+}
+
+/* 媒体查询 */
+@media (max-width: 768px) {
+  .nav-inner { padding: 12px 16px; }
+  .nav-links { display: none; }
+  .main { padding: 32px 16px 64px; }
+  .hero-title { font-size: 36px; }
+  .hero-lead { font-size: 16px; }
+  .metrics { grid-template-columns: 1fr; }
+  .metric:not(:last-child)::after { display: none; }
+  .metric { border-bottom: 1px solid var(--line); }
+  .metric-value { font-size: 56px; }
+  .project-row { grid-template-columns: 1fr; }
+  .step-head { grid-template-columns: 1fr; }
+  .tl-item { grid-template-columns: 80px 24px 1fr; }
+  .tl-tag { display: none; }
+}
+
+/* 装饰性"声明" */
+.preview-tag {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 100;
+  background: var(--text);
+  color: var(--bg);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 8px 14px;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+</style>
+</head>
+<body>
+
+<!-- ====== 顶部导航 ====== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div>
+        <div class="brand-name">数据新闻战队 · 指挥部</div>
+        <div class="brand-sub">DN-COMMAND · 第十一届中国数据新闻大赛</div>
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">首页</a></li>
+      <li><a href="#">比赛要求</a></li>
+      <li><a href="#">往期作品</a></li>
+      <li><a href="#">任务进度</a></li>
+      <li><a href="#">团队</a></li>
+      <li><a href="#">AI 工作台</a></li>
+      <li><a href="#">资源</a></li>
+    </ul>
+    <button class="export-btn">EXPORT</button>
+  </div>
+</nav>
+
+<main class="main">
+
+  <!-- ====== Hero ====== -->
+  <section class="hero">
+    <div class="hero-meta">
+      <span class="dot"></span>
+      <span>2026.05.29 · 倒计时启动中</span>
+    </div>
+    <h1 class="hero-title">
+      用数据讲一个<br>
+      <span class="accent">值得被记住</span>的故事。
+    </h1>
+    <p class="hero-lead">
+      第十一届中国数据新闻大赛 · 我们的方向是 Vibe Coding 交互网页 ——
+      把数据、文案、可视化、交互一次性整合在 index.html 里,从想法到上线全靠 AI 协作完成。
+    </p>
+  </section>
+
+  <!-- ====== 三大数字 ====== -->
+  <section class="metrics">
+    <div class="metric">
+      <div class="metric-label">距离作品提交 / DDL</div>
+      <div class="metric-value warn">40<span class="metric-unit">天</span></div>
+      <div class="metric-foot">2026.07.07 · 一切都在路上</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">下一关键节点</div>
+      <div class="metric-value gold">06.10</div>
+      <div class="metric-foot">报名 · 缴费 · 组队 截止</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">任务完成度</div>
+      <div class="metric-value green">33<span class="metric-unit">%</span></div>
+      <div class="metric-foot">6/18 已完成 · 12 项进行中</div>
+    </div>
+  </section>
+
+  <!-- ====== 章节 01 ====== -->
+  <div class="chapter">
+    <span class="chapter-num">01</span>
+    <h2 class="chapter-title">我们的项目</h2>
+    <span class="chapter-meta">/ THE PROJECT</span>
+  </div>
+
+  <section class="project-row">
+    <div class="panel">
+      <div class="panel-title"><span class="marker"></span>选题档案</div>
+      <div class="kv-row">
+        <span class="kv-key">Topic</span>
+        <span class="kv-val">长江禁渔五年观察</span>
+      </div>
+      <div class="kv-row">
+        <span class="kv-key">Format</span>
+        <span class="kv-val">Vibe Coding · 交互网页</span>
+      </div>
+      <div class="kv-row">
+        <span class="kv-key">Stack</span>
+        <span class="kv-val">HTML + Tailwind + ECharts</span>
+      </div>
+      <div class="kv-row">
+        <span class="kv-key">Team</span>
+        <span class="kv-val">马仕瑾 · 韩明珠 · 颜纤蕴 · 陈祎洋</span>
+      </div>
+      <div class="callout">
+        <strong>方向锚点 ·</strong> 类似罗小雅团队《文化之光为谁点亮》风格,
+        滚动叙事 + ECharts 嵌入,用 Cursor / Trae 协作生成。
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title"><span class="marker"></span>快捷入口</div>
+      <div class="quick-grid">
+        <div class="quick-item">
+          <span class="quick-num">02</span>
+          <span class="quick-name">比赛要求</span>
+          <span class="quick-desc">9 项材料 · 6 评分维度</span>
+        </div>
+        <div class="quick-item">
+          <span class="quick-num">03</span>
+          <span class="quick-name">往期作品</span>
+          <span class="quick-desc">24 件一等奖拆解</span>
+        </div>
+        <div class="quick-item">
+          <span class="quick-num">04</span>
+          <span class="quick-name">任务进度</span>
+          <span class="quick-desc">6 周作战时序</span>
+        </div>
+        <div class="quick-item">
+          <span class="quick-num">05</span>
+          <span class="quick-name">AI 工作台</span>
+          <span class="quick-desc">7 阶段 · 16 提示词</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 章节 02 时间线 ====== -->
+  <div class="chapter">
+    <span class="chapter-num">02</span>
+    <h2 class="chapter-title">关键节点时间轴</h2>
+    <span class="chapter-meta">/ TIMELINE</span>
+  </div>
+
+  <ul class="timeline-list">
+    <li class="tl-item passed">
+      <span class="tl-date">2026.05.10</span>
+      <span class="tl-marker"><span class="tl-dot"></span><span class="tl-line"></span></span>
+      <div class="tl-body">
+        <div class="tl-title">大赛启动</div>
+        <div class="tl-desc">官方启动征稿,第十一届赛事开锣。</div>
+      </div>
+      <span class="tl-tag">已过</span>
+    </li>
+    <li class="tl-item current">
+      <span class="tl-date">2026.06.10</span>
+      <span class="tl-marker"><span class="tl-dot"></span><span class="tl-line"></span></span>
+      <div class="tl-body">
+        <div class="tl-title">报名 / 组队截止</div>
+        <div class="tl-desc">完成报名、缴费 100 元/人、提交团队信息。</div>
+      </div>
+      <span class="tl-tag">还剩 12 天</span>
+    </li>
+    <li class="tl-item">
+      <span class="tl-date">2026.07.07</span>
+      <span class="tl-marker"><span class="tl-dot"></span><span class="tl-line"></span></span>
+      <div class="tl-body">
+        <div class="tl-title">作品提交截止</div>
+        <div class="tl-desc">9 项材料齐全,作品链接稳定可访问,提交后不可修改。</div>
+      </div>
+      <span class="tl-tag">关键 DDL</span>
+    </li>
+    <li class="tl-item">
+      <span class="tl-date">2026.07.31</span>
+      <span class="tl-marker"><span class="tl-dot"></span><span class="tl-line"></span></span>
+      <div class="tl-body">
+        <div class="tl-title">省赛结束</div>
+        <div class="tl-desc">分赛区初赛、决赛同步进行,推荐作品入围国赛。</div>
+      </div>
+      <span class="tl-tag">省赛</span>
+    </li>
+    <li class="tl-item">
+      <span class="tl-date">2026.08.21</span>
+      <span class="tl-marker"><span class="tl-dot"></span><span class="tl-line"></span></span>
+      <div class="tl-body">
+        <div class="tl-title">国赛入围公布</div>
+        <div class="tl-desc">国赛入围名单发布,进入复赛阶段。</div>
+      </div>
+      <span class="tl-tag">国赛</span>
+    </li>
+    <li class="tl-item">
+      <span class="tl-date">2026.09.26</span>
+      <span class="tl-marker"><span class="tl-dot"></span></span>
+      <div class="tl-body">
+        <div class="tl-title">全国总决赛</div>
+        <div class="tl-desc">武汉体育学院线下答辩,见证最后的胜负。</div>
+      </div>
+      <span class="tl-tag">终章</span>
+    </li>
+  </ul>
+
+  <!-- ====== AI 工作台 预览 ====== -->
+  <section class="ai-section">
+    <div class="chapter">
+      <span class="chapter-num">03</span>
+      <h2 class="chapter-title">AI 工作台 · 阶段示例</h2>
+      <span class="chapter-meta">/ AI WORKBENCH</span>
+    </div>
+    <p style="color:var(--text-2); font-size:14px; margin-bottom:32px; max-width:680px;">
+      下面是 7 个阶段中 ④「叙事结构设计」的展示样式 ——
+      每阶段都嵌入了「这一步要懂的」,直接读核心知识,不必再翻原文章。
+    </p>
+
+    <div class="workflow-step">
+      <div class="step-head">
+        <span class="step-num">04</span>
+        <div>
+          <div class="step-info-role">NARRATIVE ARCHITECT · 叙事结构师</div>
+          <div class="step-info-title">叙事结构设计</div>
+          <div class="step-info-desc">
+            把洞察组织成"总—分—总"或 ABC 因果链,决定章节、钩子句、过渡。
+            每个章节都要回答一个问题,而不是堆砌图表。
+          </div>
+        </div>
+        <div class="step-progress">
+          <span class="step-progress-num">2/3</span>
+          交付物
+        </div>
+      </div>
+
+      <div class="step-body">
+
+        <div class="step-block">
+          <div class="step-block-label">这一步要懂的</div>
+          <ul class="knowledge-points">
+            <li>
+              <span class="kp-num">i.</span>
+              <div>
+                <div class="kp-title">ABC 叙事模型(Antecedent-Behavior-Consequence)</div>
+                <div class="kp-desc">
+                  把宏观议题拆成 条件 → 行动 → 结果 的因果链。条件交代结构性压力,行动呈现具体的人如何应对,结果指向社会层面的连锁反应。末章建议加"建设性解方",避免落入扁平批判。
+                </div>
+                <div class="kp-source">出处 · 翟红蕾、吴怡璇《数据新闻对社会治理议题的建构与引导》</div>
+              </div>
+            </li>
+            <li>
+              <span class="kp-num">ii.</span>
+              <div>
+                <div class="kp-title">三条经典轴心链(可直接借鉴)</div>
+                <div class="kp-desc">
+                  ① 经济压力 → 月薪两万吃不起 → 社会情绪激化 ②  医疗风险 → 麻醉医生出逃 → 公共信任危机 ③  教育内卷 → 不婚不育 → 家庭结构松动
+                </div>
+                <div class="kp-source">出处 · 翟红蕾、吴怡璇</div>
+              </div>
+            </li>
+            <li>
+              <span class="kp-num">iii.</span>
+              <div>
+                <div class="kp-title">三重重构机制 · 评分时会被评委检查</div>
+                <div class="kp-desc">
+                  对比强化(快思维) + 系统关联(隐性桥接) + 生活化转译(政策→奶茶)。三者缺一,作品就只剩"信息密度",没有"叙事张力"。
+                </div>
+                <div class="kp-source">出处 · 翟红蕾、吴怡璇</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="step-block">
+          <div class="step-block-label">提示词模板</div>
+          <pre class="prompt-box">我的数据新闻主题是：【填写】
+我已经挖出的核心洞察：【粘贴 3-5 条】
+
+请基于"条件 Antecedent → 行动 Behavior → 结果 Consequence"轴心链：
+1. 设计 4-5 个章节,每章给：
+   - 章节标题(吸引人的钩子句)
+   - 核心论点(一句话)
+   - 需要的图表类型 + 哪条洞察支撑
+   - 过渡到下一章的"桥句"
+2. 全文的开头钩子(150 字, 用具体的"人/数字/场景"打开)
+3. 结尾的"建设性解方"(不要批判式收尾,要给出方向)
+4. 每章预估字数</pre>
+          <div class="prompt-actions">
+            <button class="tool-chip primary">⎘ 复制提示词</button>
+            <button class="tool-chip">→ DeepSeek</button>
+            <button class="tool-chip">→ Kimi</button>
+            <button class="tool-chip">→ 通义</button>
+          </div>
+        </div>
+
+        <div class="step-block">
+          <div class="step-block-label">交付物清单</div>
+          <ul class="knowledge-points">
+            <li>
+              <span class="kp-num">✓</span>
+              <div>
+                <div class="kp-title" style="text-decoration:line-through; color:var(--text-3);">章节大纲</div>
+              </div>
+            </li>
+            <li>
+              <span class="kp-num">✓</span>
+              <div>
+                <div class="kp-title" style="text-decoration:line-through; color:var(--text-3);">每章关键句草稿</div>
+              </div>
+            </li>
+            <li>
+              <span class="kp-num" style="color:var(--text-3);">○</span>
+              <div>
+                <div class="kp-title">图表清单(含 ECharts 配置)</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Footer ====== -->
+  <footer class="foot">
+    <span>DN-COMMAND · v0.4 PREVIEW</span>
+    <span class="foot-quote">"数据赋能的核心永远是为人赋能。"</span>
+    <span>2026.05.29</span>
+  </footer>
+
+</main>
+
+<div class="preview-tag">VISUAL PREVIEW</div>
+
+</body>
+</html>
