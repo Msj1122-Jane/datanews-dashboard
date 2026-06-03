@@ -2,33 +2,29 @@
 
 const STORAGE_KEY = 'dn_dashboard_v1';
 
-// === 云同步配置(LeanCloud) ===
-// 待你注册 LeanCloud 后填入
+// === 云同步配置(GitHub Gist) ===
 const CLOUD = {
-  appId: '',     // 应用 AppID
-  appKey: '',    // 应用 AppKey
-  serverURL: '', // 应用 REST API 服务器地址(国内版必填)
+  gistId: 'eb73a6cc7a76c6987c51a66a32f83f93',
+  filename: 'dashboard-data.json',
+  // Token 由用户在页面上输入，不硬编码在代码里
+  get token() { return localStorage.getItem('dn_gist_token') || ''; },
 };
 
 async function cloudPull() {
-  if (!CLOUD.appId) return { ok: false, notReady: true };
+  if (!CLOUD.token) return { ok: false, notReady: true };
   try {
-    const res = await fetch(CLOUD.serverURL + '/1.1/classes/Dashboard/shared', {
-      method: 'GET',
+    const res = await fetch(`https://api.github.com/gists/${CLOUD.gistId}`, {
       headers: {
-        'X-LC-Id': CLOUD.appId,
-        'X-LC-Key': CLOUD.appKey,
-        'Content-Type': 'application/json'
+        'Authorization': `token ${CLOUD.token}`,
+        'Accept': 'application/vnd.github.v3+json'
       }
     });
-    if (!res.ok) {
-      // 第一次没有数据,LeanCloud 返 404,视为空
-      if (res.status === 404) return { ok: false, empty: true };
-      throw new Error('HTTP ' + res.status);
-    }
-    const r = await res.json();
-    if (!r.payload) return { ok: false, empty: true };
-    State.data = JSON.parse(r.payload);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const gist = await res.json();
+    const content = gist.files[CLOUD.filename]?.content;
+    if (!content || content === '{}') return { ok: false, empty: true };
+    const parsed = JSON.parse(content);
+    State.data = parsed;
     State.data.lastSyncTime = new Date().toLocaleString('zh-CN');
     State.save();
     return { ok: true, time: State.data.lastSyncTime };
@@ -38,34 +34,21 @@ async function cloudPull() {
 }
 
 async function cloudPush() {
-  if (!CLOUD.appId) return { ok: false, notReady: true };
+  if (!CLOUD.token) return { ok: false, notReady: true };
   try {
-    const payload = JSON.stringify(State.data);
-    // 用固定 objectId "shared",实现"单文档覆盖"模式
-    const res = await fetch(CLOUD.serverURL + '/1.1/classes/Dashboard/shared', {
-      method: 'PUT',
+    const payload = JSON.stringify(State.data, null, 2);
+    const res = await fetch(`https://api.github.com/gists/${CLOUD.gistId}`, {
+      method: 'PATCH',
       headers: {
-        'X-LC-Id': CLOUD.appId,
-        'X-LC-Key': CLOUD.appKey,
+        'Authorization': `token ${CLOUD.token}`,
+        'Accept': 'application/vnd.github.v3+json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ payload })
+      body: JSON.stringify({
+        files: { [CLOUD.filename]: { content: payload } }
+      })
     });
-    if (res.status === 404) {
-      // 第一次推送,记录还不存在 → 创建
-      const createRes = await fetch(CLOUD.serverURL + '/1.1/classes/Dashboard', {
-        method: 'POST',
-        headers: {
-          'X-LC-Id': CLOUD.appId,
-          'X-LC-Key': CLOUD.appKey,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ objectId: 'shared', payload })
-      });
-      if (!createRes.ok) throw new Error('创建失败 HTTP ' + createRes.status);
-    } else if (!res.ok) {
-      throw new Error('HTTP ' + res.status);
-    }
+    if (!res.ok) throw new Error('HTTP ' + res.status);
     State.data.lastSyncTime = new Date().toLocaleString('zh-CN');
     State.save();
     return { ok: true, time: State.data.lastSyncTime };
@@ -189,17 +172,27 @@ Pages.home = (root) => {
   const pct = Math.round(done / tasks.length * 100);
 
   root.innerHTML = `
-    <div class="card mb-4 flex items-center justify-between flex-wrap gap-2" style="background: linear-gradient(90deg, #f0f9ff 0%, #fff 100%); border-color: #bae6fd;">
-      <div class="flex items-center gap-3 text-sm">
-        <span class="text-base">☁️</span>
-        <div>
-          <div class="font-medium text-slate-700">团队云同步 <span class="text-xs text-slate-500 ml-2">${State.data.lastSyncTime ? '上次同步: ' + escapeHtml(State.data.lastSyncTime) : '尚未同步'}</span></div>
-          <div class="text-xs text-slate-500 mt-0.5">点 ⬆️ 推送将本地数据共享给队员 · 点 ⬇️ 拉取看队员最新版</div>
+    <div class="card mb-4" style="background: linear-gradient(90deg, #f0f9ff 0%, #fff 100%); border-color: #bae6fd;">
+      <div class="flex items-center justify-between flex-wrap gap-2">
+        <div class="flex items-center gap-3 text-sm">
+          <span class="text-base">☁️</span>
+          <div>
+            <div class="font-medium text-slate-700">团队云同步 <span class="text-xs text-slate-500 ml-2">${State.data.lastSyncTime ? '上次同步: ' + escapeHtml(State.data.lastSyncTime) : '尚未同步'}</span></div>
+            <div class="text-xs text-slate-500 mt-0.5">点 ⬆️ 推送将本地数据共享给队员 · 点 ⬇️ 拉取看队员最新版</div>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <button id="cloudPushBtn" class="btn btn-primary text-xs">⬆️ 推送到云</button>
+          <button id="cloudPullBtn" class="btn btn-secondary text-xs">⬇️ 从云拉取</button>
         </div>
       </div>
-      <div class="flex gap-2">
-        <button id="cloudPushBtn" class="btn btn-primary text-xs">⬆️ 推送到云</button>
-        <button id="cloudPullBtn" class="btn btn-secondary text-xs">⬇️ 从云拉取</button>
+      <div class="mt-3 flex items-center gap-2">
+        <label class="text-xs text-slate-500 whitespace-nowrap">🔑 GitHub Token:</label>
+        <input id="gistTokenInput" type="password"
+          class="field text-xs flex-1"
+          placeholder="首次使用请输入 GitHub Token（ghp_xxx...），保存在本地不上传"
+          value="${escapeHtml(CLOUD.token)}" />
+        <button id="saveTokenBtn" class="btn btn-secondary text-xs whitespace-nowrap">保存</button>
       </div>
     </div>
 
@@ -274,9 +267,15 @@ Pages.home = (root) => {
   $('#topicInput').addEventListener('change', e => { State.data.workTopic = e.target.value; State.save(); });
   $('#formInput').addEventListener('change', e => { State.data.workForm = e.target.value; State.save(); });
 
+  $('#saveTokenBtn')?.addEventListener('click', () => {
+    const t = $('#gistTokenInput').value.trim();
+    if (t) { localStorage.setItem('dn_gist_token', t); alert('✅ Token 已保存到本地'); }
+    else { localStorage.removeItem('dn_gist_token'); alert('已清除 Token'); }
+  });
+
   $('#cloudPushBtn')?.addEventListener('click', async () => {
-    if (!CLOUD.appId) { alert('☁️ 云同步未配置\n\n请先注册 LeanCloud 拿到 AppID/AppKey 填入 main.js'); return; }
-    if (!confirm('推送会覆盖云端数据,所有队员下次刷新会看到你的版本。继续?')) return;
+    if (!CLOUD.token) { alert('☁️ 请先输入 GitHub Token 并点保存'); return; }
+    if (!confirm('推送会覆盖云端数据，所有队员下次拉取会看到你的版本。继续?')) return;
     const btn = $('#cloudPushBtn');
     const old = btn.textContent;
     btn.textContent = '⏳ 推送中...';
@@ -288,7 +287,7 @@ Pages.home = (root) => {
   });
 
   $('#cloudPullBtn')?.addEventListener('click', async () => {
-    if (!CLOUD.appId) { alert('☁️ 云同步未配置\n\n请先注册 LeanCloud 拿到 AppID/AppKey 填入 main.js'); return; }
+    if (!CLOUD.token) { alert('☁️ 请先输入 GitHub Token 并点保存'); return; }
     if (!confirm('拉取会覆盖你本地的所有数据。继续?')) return;
     const btn = $('#cloudPullBtn');
     const old = btn.textContent;
